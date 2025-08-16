@@ -1,7 +1,8 @@
-# rebalance_fitness_tracker
-A fitness tracking app for the gym enthusiast.
+
+<img width="345" height="301" alt="rebalance_logo" src="https://github.com/user-attachments/assets/ef96da84-5aa4-473c-ac2e-6c66ceea6fda" />
 
 # ReBalance Fitness Tracker 🏋️‍♂️
+A fitness tracking app for the gym enthusiast.
 
 A **full-stack fitness tracking web application** that enables users to log workouts, visualize progress, and receive personalized exercise recommendations. Built with **PHP, MySQL, JavaScript, and Chart.js**, the app demonstrates secure authentication, data visualization, and scalable database design.
 
