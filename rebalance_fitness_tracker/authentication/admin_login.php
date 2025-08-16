@@ -1,0 +1,147 @@
+<?php
+/**
+ * ReBalance Fitness Tracker
+ * Jerome Laranang, July 1, 2025
+ *
+ * This PHP and MySQL app is a fitness tracker that allows users to log their workouts while at
+ * the gym. Users can search for exercises, and log the reps and weight each set. The app recommends
+ * a list of exercises using a least-used formula that helps the user balance their exercise routine.
+ * The user can also access a dashboard of their weekly (Sun-Sat) progress and see their workout history.
+ * A role-based access control gives the admin the ability to add and remove exercises.
+ *
+ * Technologies: XAMPP(PHP, MySQL/MariaDB, Apache), AJAX, Javascript
+ * Images: https://Wger.de/api/v2/, Wger SwaggerUI documentation
+ *
+ * @var string $admin_username
+ * @var string $admin_password
+ */
+session_start();
+require_once('../model/database.php');
+
+// Redirect to the select exercise page if the admin is already logged in
+if (isset($_SESSION['is_valid_admin'])) {
+    header("Location: ../admin_main_menu/exercise_manager.php");
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ReBalance Fitness Tracker</title>
+    <link rel="stylesheet" type="text/css" href="../main.css"/>
+</head>
+<body>
+<!-- Header -->
+<?php include('../view/header.php'); ?>
+<main>
+    <h1>Admin Login</h1>
+    <p>You must login to perform admin tasks.</p>
+    <form id="admin_login_form" autocomplete="off">
+        <!-- Using a valid username/password, the form's data will be sent via POST request to the admin menu -->
+        <div class="form-row">
+            <label for="username">Username:</label>
+            <input id="username" type="text" name="username"
+                   value="<?php echo htmlspecialchars($admin_username); ?>">
+        </div>
+        <div class="form-row">
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password"
+                   value="<?php echo htmlspecialchars($admin_password); ?>">
+        </div>
+        <div class="form-row">
+            <label for="login-button">&nbsp;</label>
+            <input id="login-button" type="button" value="Login">
+        </div>
+        <div class="form-row">
+            <p id="login-error-p"></p>
+        </div>
+    </form>
+</main>
+<!-- Footer -->
+<?php include('../view/footer.php'); ?>
+
+<script type="text/javascript">
+    // Wait for HTML to fully load all elements
+    document.addEventListener('DOMContentLoaded', () => {
+        // Listener for the search button
+        document.querySelector('#login-button').addEventListener('click', function (e) {
+            e.preventDefault();
+            // Get the username from the form element then process the login.
+            // Show an error message upon invalid login
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            if (username && password) {
+                processLogin(username, password);
+            } else if (!username) {
+                document.getElementById('login-error-p').textContent = 'Username is required';
+            } else if (!password) {
+                document.getElementById('login-error-p').textContent = 'Password is required';
+            }
+        });
+    });
+
+    // AJAX technique to process the login or show an error without reloading the page
+    function processLogin(username, password) {
+        // URL to be sent via POST request to the server
+        const url = `../util/verify_admin.php`;
+
+        // Get the p element to show errors later
+        const errorMessage = document.getElementById('login-error-p');
+
+        // Reset the errors if there are any.
+        errorMessage.textContent = '';
+
+        // Create a headers object
+        const myHeader = new Headers();
+        myHeader.append('Content-Type', 'application/json');
+        myHeader.append('Accept', 'application/json');
+
+        // Use a GET request to fetch username from the database and POST the form to the register product page.
+        // Otherwise, show an error.
+        fetch(url, {                                                // Use Fetch API as alt. to XMLHttpRequest
+            method: 'POST',
+            headers: myHeader,
+            body: JSON.stringify({username, password}),
+            credentials: 'include'
+        })
+            .then(response => response.json())                      // Set response to JSON
+            .then(result => {
+                if (result.status === 'db_error') {
+                    // Redirect to the HTML error page and pass the message as a query param
+                    window.location.href = `../error/database_error.php?message=${encodeURIComponent(result.message)}`;
+                } else if (result.status === 'success') {
+                    // Handle result from server
+                    if (result.admin) {
+                        // Create a hidden form to append in original HTML and post to main menu page
+                        const form = document.createElement('form');
+                        form.action = '../admin_main_menu/exercise_manager.php';
+                        form.method = 'POST';
+
+                        for (const key in result.admin) {
+                            console.log(key);
+                            if (result.admin.hasOwnProperty(key)) {
+                                const input_element = document.createElement('input');
+                                input_element.type = 'hidden';
+                                input_element.name = key
+                                input_element.value = result.admin[key];
+                                form.appendChild(input_element);
+                            }
+                        }
+                        document.body.appendChild(form);
+                        form.submit();
+                    } else {
+                        // Show a validation error with invalid emails
+                        document.getElementById('login-error-p').textContent = result.message;
+                    }
+                } else if (result.status === 'unauthorized') {
+                    // Unauthorized alert upon invalid login
+                    document.getElementById('login-error-p').textContent = result.message;
+                } else if (result.status === 'input error') {
+                    // User input error message
+                    errorMessage.textContent = result.message;
+                }
+            }).catch(error => { errorMessage.textContent = error; });
+    }
+</script>
+</body>
+</html>
