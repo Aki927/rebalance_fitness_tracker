@@ -14,6 +14,12 @@ A **full-stack fitness tracking web application** that enables users to log work
 * **Role-Based Authentication**: Separate **user** and **admin** portals with session handling and CRUD functionality.
 * **Normalized Database Design**: Schema structured in **3NF** for efficient queries and scalable data storage.
 
+
+## 🎥 Demo
+
+[![Watch the demo](https://img.youtube.com/vi/mqaySZwT5yk/0.jpg)](https://www.youtube.com/watch?v=mqaySZwT5yk)
+
+
 ## 🛠️ Tech Stack
 
 * **Frontend**: HTML, CSS, JavaScript/AJAX
@@ -21,6 +27,7 @@ A **full-stack fitness tracking web application** that enables users to log work
 * **Database**: MySQL (3NF relational schema)
 * **Data Visualization**: Chart.js
 * **Auth & Security**: PHP sessions, role-based access
+
 
 ## 📂 Project Structure
 
@@ -38,6 +45,7 @@ A **full-stack fitness tracking web application** that enables users to log work
 
 <img width="762" height="535" alt="Screenshot 2025-08-16 at 7 20 24 PM" src="https://github.com/user-attachments/assets/13002306-cd5f-45cd-851c-81ff83bd6d6f" />
 
+
 ## ⚡ Getting Started
 
 ### Prerequisites
@@ -45,6 +53,7 @@ A **full-stack fitness tracking web application** that enables users to log work
 * [XAMPP](https://www.apachefriends.org/) or any PHP/MySQL environment
 * PHP ≥ 8.0
 * MySQL ≥ 5.7
+
 
 ### Setup Instructions
 
@@ -67,10 +76,6 @@ A **full-stack fitness tracking web application** that enables users to log work
    * Run `http://localhost/ReBalance-Fitness-Tracker` in browser.
 
 
-## 📊 Demo
-
-
-
 ## 🎯 Why This Project Matters
 
 * Demonstrates **full-stack engineering** skills.
@@ -85,5 +90,4 @@ A **full-stack fitness tracking web application** that enables users to log work
 
 * [LinkedIn](https://linkedin.com/in/jerome-laranang)
 * [GitHub](https://github.com/Aki927)
-
 
