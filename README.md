@@ -1,5 +1,5 @@
 
-<img width="345" height="301" alt="rebalance_logo" src="https://github.com/user-attachments/assets/ef96da84-5aa4-473c-ac2e-6c66ceea6fda" />
+![rebalance_logo-2](https://github.com/user-attachments/assets/df6d9680-e242-4513-9eff-422003008172)
 
 # ReBalance Fitness Tracker 🏋️‍♂️
 A fitness tracking app for the gym enthusiast.
