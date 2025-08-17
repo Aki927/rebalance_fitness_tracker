@@ -27,7 +27,7 @@ A **full-stack fitness tracking web application** that enables users to log work
 * **Database**: MySQL (3NF relational schema)
 * **Data Visualization**: Chart.js
 * **Auth & Security**: PHP sessions, role-based access
-* **Logo: Adobe Photoshop
+* **Logo**: Adobe Photoshop
 
 
 ## 📂 Project Structure
